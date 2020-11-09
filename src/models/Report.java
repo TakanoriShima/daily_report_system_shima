@@ -55,6 +55,30 @@ public class Report {
     @Column(name = "content", nullable = false)
     private String content;
 
+    public String getStart_at() {
+		return start_at;
+	}
+
+	public void setStart_at(String start_at) {
+		this.start_at = start_at;
+	}
+
+	public String getEnd_at() {
+		return end_at;
+	}
+
+	public void setEnd_at(String end_at) {
+		this.end_at = end_at;
+	}
+
+	// 出勤時間
+    @Column(name = "start_at")
+    private String start_at;
+
+    // 退勤時間
+    @Column(name = "end_at")
+    private String end_at;
+
     @Column(name = "created_at", nullable = false)
     private Timestamp created_at;
 
@@ -101,7 +125,9 @@ public class Report {
         this.content = content;
     }
 
-    public Timestamp getCreated_at() {
+
+
+	public Timestamp getCreated_at() {
         return created_at;
     }
 
