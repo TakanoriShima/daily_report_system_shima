@@ -37,6 +37,7 @@ public class ReportsShowServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		System.out.println("OKOK");
 		EntityManager em = DBUtil.createEntityManager();
 
 		Employee e = (Employee) request.getSession().getAttribute("login_employee");
@@ -57,6 +58,7 @@ public class ReportsShowServlet extends HttpServlet {
 		request.setAttribute("favoritesOfAttensionCount", favoritesOfAttension.size());
 		request.setAttribute("_token", request.getSession().getId());
 		request.setAttribute("favoritedEmployeeList", favoritedEmployeeList);
+
 
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/reports/show.jsp");
 		rd.forward(request, response);

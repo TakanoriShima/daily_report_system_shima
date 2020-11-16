@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import models.Employee;
 import models.Report;
 import models.validators.ReportValidator;
 import utils.DBUtil;
@@ -50,6 +51,8 @@ public class ReportsUpdateServlet extends HttpServlet {
 			r.setStart_at(request.getParameter("start_at"));
 			r.setEnd_at(request.getParameter("end_at"));
 			r.setUpdated_at(new Timestamp(System.currentTimeMillis()));
+			Employee approval_employee = em.find(Employee.class, Integer.parseInt(request.getParameter("approval_admin_id")));
+			r.setApproval_employee(approval_employee);
 
 			List<String> errors = ReportValidator.validate(r);
 			if (errors.size() > 0) {

@@ -27,13 +27,23 @@
 <br /><br />
 
 <!-- 出勤時間  -->
-<label for="start_at">タイトル</label><br />
+<label for="start_at">出勤時間</label><br />
 <input type="time" name="start_at" value="${report.start_at}" />
 <br /><br />
 
 <!-- 退勤時間 -->
-<label for="end_at">タイトル</label><br />
+<label for="end_at">退勤時間</label><br />
 <input type="time" name="end_at" value="${report.end_at}" />
+<br /><br />
+
+<label for="approval_admin_id">承認者選択</label><br />
+<select name="approval_admin_id">
+<option value="none">承認者を選択してください</option>
+<c:forEach var="admin" items="${admins}">
+	<option value="${admin.id}" <c:if test="${report.approval_employee.id == admin.id}">selected</c:if>><c:out value="${admin.name}" /></option>
+</c:forEach>
+
+</select>
 <br /><br />
 
 <input type="hidden" name="_token" value="${_token}" />

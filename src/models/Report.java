@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,20 +17,24 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Table(name = "reports")
 @NamedQueries({ @NamedQuery(name = "getAllReports", query = "SELECT r FROM Report AS r ORDER BY r.id DESC"),
 		@NamedQuery(name = "getReportsCount", query = "SELECT COUNT(r) FROM Report AS r"),
+		@NamedQuery(name = "getApprovalReports", query = "SELECT r FROM Report AS r WHERE r.approval_employee=:approval_employee"),
 		@NamedQuery(name = "getMyAllReports", query = "SELECT r FROM Report AS r WHERE r.employee = :employee ORDER BY r.id DESC"),
+
 		@NamedQuery(name = "getMyReportsCount", query = "SELECT COUNT(r) FROM Report AS r WHERE r.employee = :employee") })
 @Entity
-public class Report /*implements Serializable*/ {
+public class Report /* implements Serializable */ {
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
+	// 多対1
 	@ManyToOne
 	@JoinColumn(name = "employee_id", nullable = false)
 	private Employee employee;
@@ -44,9 +49,25 @@ public class Report /*implements Serializable*/ {
 	@Column(name = "content", nullable = false)
 	private String content;
 
+	@OneToOne
+	@JoinColumn(name = "appraval_employee_id", nullable = false)
+	private Employee approval_employee;
+
 	// 多対多
 	@ManyToMany(mappedBy = "favotiteReports", fetch = FetchType.EAGER)
 	List<Employee> favoritedEmployees;
+
+	// 双方向1対1
+	@OneToOne(mappedBy = "report", cascade = CascadeType.ALL)
+	private Approval approval;
+
+	public Approval getApproval() {
+		return approval;
+	}
+
+	public void setApproval(Approval approval) {
+		this.approval = approval;
+	}
 
 	public String getStart_at() {
 		return start_at;
@@ -114,6 +135,14 @@ public class Report /*implements Serializable*/ {
 		return content;
 	}
 
+	public Employee getApproval_employee() {
+		return approval_employee;
+	}
+
+	public void setApproval_employee(Employee approval_employee) {
+		this.approval_employee = approval_employee;
+	}
+
 	public void setContent(String content) {
 		this.content = content;
 	}
@@ -141,6 +170,5 @@ public class Report /*implements Serializable*/ {
 	public void setFavoritedEmployees(List<Employee> favoritedEmployees) {
 		this.favoritedEmployees = favoritedEmployees;
 	}
-
 
 }

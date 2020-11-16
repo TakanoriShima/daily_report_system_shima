@@ -1,6 +1,7 @@
 package controllers.reports;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.servlet.RequestDispatcher;
@@ -34,14 +35,16 @@ public class ReportsEditServlet extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityManager em = DBUtil.createEntityManager();
+        Employee login_employee = (Employee)request.getSession().getAttribute("login_employee");
 
         Report r = em.find(Report.class, Integer.parseInt(request.getParameter("id")));
+        List<Employee> admins_except_me = em.createNamedQuery("getAllAdminsExceptMe", Employee.class).setParameter("id", login_employee.getId()).getResultList();
 
         em.close();
 
-        Employee login_employee = (Employee)request.getSession().getAttribute("login_employee");
         if(r != null && login_employee.getId() == r.getEmployee().getId()) {
             request.setAttribute("report", r);
+            request.setAttribute("admins", admins_except_me);
             request.setAttribute("_token", request.getSession().getId());
             request.getSession().setAttribute("report_id", r.getId());
         }

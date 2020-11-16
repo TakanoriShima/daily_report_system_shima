@@ -61,6 +61,10 @@ public class ReportsCreateServlet extends HttpServlet {
 			r.setStart_at(request.getParameter("start_at"));
 			r.setEnd_at(request.getParameter("end_at"));
 
+			Employee approval_employee = em.find(Employee.class, Integer.parseInt(request.getParameter("approval_admin_id")));
+
+			r.setApproval_employee(approval_employee);
+
 			Timestamp currentTime = new Timestamp(System.currentTimeMillis());
 			r.setCreated_at(currentTime);
 			r.setUpdated_at(currentTime);
