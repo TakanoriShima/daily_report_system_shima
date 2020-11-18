@@ -32,7 +32,7 @@
 								<td class="report_name blue">承認</td>
 							</c:when>
 							<c:when test="${report.approval.result == '却下'}">
-								<td class="report_name red">却下</td>
+								<td class="report_name red">却下 &nbsp;&nbsp;<a href="<c:url value='/resubmitreport/new?id=${report.id}' />">再提出</a></td>
 							</c:when>
 						</c:choose>
                         <td class="report_action"><a href="<c:url value='/reports/show?id=${report.id}' />">詳細を見る</a></td>
