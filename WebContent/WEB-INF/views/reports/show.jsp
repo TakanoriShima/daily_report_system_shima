@@ -102,7 +102,7 @@
 				</c:if>
 
 
-                <c:if test="${sessionScope.login_employee.id == report.employee.id}">
+                <c:if test="${sessionScope.login_employee.id == report.employee.id && report.approval.result == null}">
                     <p><a href="<c:url value="/reports/edit?id=${report.id}" />">この日報を編集する</a></p>
                 </c:if>
             </c:when>
