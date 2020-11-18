@@ -25,8 +25,9 @@ import javax.persistence.Table;
 		@NamedQuery(name = "getReportsCount", query = "SELECT COUNT(r) FROM Report AS r"),
 		@NamedQuery(name = "getApprovalReports", query = "SELECT r FROM Report AS r WHERE r.approval_employee=:approval_employee"),
 		@NamedQuery(name = "getMyAllReports", query = "SELECT r FROM Report AS r WHERE r.employee = :employee ORDER BY r.id DESC"),
+		@NamedQuery(name = "getMyReportsCount", query = "SELECT COUNT(r) FROM Report AS r WHERE r.employee = :employee"),
 
-		@NamedQuery(name = "getMyReportsCount", query = "SELECT COUNT(r) FROM Report AS r WHERE r.employee = :employee") })
+})
 @Entity
 public class Report /* implements Serializable */ {
 	@Id
@@ -60,6 +61,30 @@ public class Report /* implements Serializable */ {
 	// 双方向1対1
 	@OneToOne(mappedBy = "report", cascade = CascadeType.ALL)
 	private Approval approval;
+
+	// 再提出の際、再提出もとになったレポート番号
+	@Column(name = "parent_report_id", length = 255)
+	private Integer parent_report_id;
+
+	// 再提出可能か
+	@Column(name = "resubmit_flag", length = 255)
+	private Integer resubmit_flag;
+
+	public Integer getResubmit_flag() {
+		return resubmit_flag;
+	}
+
+	public void setResubmit_flag(Integer resubmit_flag) {
+		this.resubmit_flag = resubmit_flag;
+	}
+
+	public Integer getParent_report_id() {
+		return parent_report_id;
+	}
+
+	public void setParent_report_id(Integer parent_report_id) {
+		this.parent_report_id = parent_report_id;
+	}
 
 	public Approval getApproval() {
 		return approval;

@@ -28,6 +28,17 @@ public class Approval /*implements Serializable*/ {
 	@JoinColumn(name = "report_id", nullable = false)
 	private Report report;
 
+	@Column(name = "comment", length = 255, nullable = false)
+	private String comment;
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
 	@Column(name = "result", length = 255, nullable = false)
 	private String result;
 

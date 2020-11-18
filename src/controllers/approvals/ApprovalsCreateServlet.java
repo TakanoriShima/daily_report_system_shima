@@ -47,20 +47,25 @@ public class ApprovalsCreateServlet extends HttpServlet {
 
 			Approval a = new Approval();
 
-//			Employee login_employee = (Employee)request.getSession().getAttribute("login_employee");
-//			a.set
 			Report r = em.find(Report.class, Integer.parseInt(request.getParameter("report_id")));
 			a.setReport(r);
+			a.setComment(request.getParameter("comment"));
 			a.setResult(request.getParameter("approval_result"));
 			Timestamp currentTime = new Timestamp(System.currentTimeMillis());
 			a.setCreated_at(currentTime);
 			a.setUpdated_at(currentTime);
 
-
 			em.getTransaction().begin();
+
 			em.persist(a);
+			r.setResubmit_flag(1);
+
 			em.getTransaction().commit();
+
 			em.close();
+
+			em = DBUtil.createEntityManager();
+
 			request.getSession().setAttribute("flush", "承認可否を決定しました。");
 
 			response.sendRedirect(request.getContextPath() + "/approvals/index");

@@ -72,6 +72,14 @@ public class ResubmitReportCreate extends HttpServlet {
 
 			r.setApproval_employee(approval_employee);
 
+			Integer parent_report_id = Integer.parseInt(request.getParameter("report_id"));
+			r.setParent_report_id(parent_report_id);
+
+			r.setResubmit_flag(0);
+
+			Report r_parrent = em.find(Report.class, parent_report_id);
+			r_parrent.setResubmit_flag(0);
+
 			Timestamp currentTime = new Timestamp(System.currentTimeMillis());
 			r.setCreated_at(currentTime);
 			r.setUpdated_at(currentTime);

@@ -47,4 +47,5 @@
 <br /><br />
 
 <input type="hidden" name="_token" value="${_token}" />
+<input type="hidden" name="report_id" value="${report.id}" />
 <button type="submit">投稿</button>

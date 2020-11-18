@@ -57,6 +57,18 @@
                             <th>承認者</th>
                             <td><c:out value="${report.approval_employee.name}" /></td>
                         </tr>
+
+                        <c:if test="${report.approval != null}">
+	                        <tr>
+	                            <th>承認結果</th>
+	                            <td><c:out value="${report.approval.result}" /></td>
+	                        </tr>
+	                        <tr>
+	                            <th>承認者コメント</th>
+	                            <td><c:out value="${report.approval.comment}" /></td>
+	                        </tr>
+                        </c:if>
+
                         <tr>
                             <th>いいねをしてくれた従業員</th>
                             <td>
@@ -95,6 +107,9 @@
 				<c:if test="${report.approval_employee.id == sessionScope.login_employee.id && report.approval == null}">
 				<form action="${pageContext.request.contextPath}/approvals/create" method="POST" class="approval">
 					<input type="hidden" name="report_id" value="<c:out value='${report.id}'/>">
+					<label for="comment">コメント</label><br />
+					<input type="text" name="comment" required />
+					<br /><br/>
 					<input type="radio" name="approval_result" value="承認" checked> &nbsp;承認 &nbsp;
 					<input type="radio" name="approval_result" value="却下"> &nbsp;却下 &nbsp;
 					<button type="submit">送信</button>

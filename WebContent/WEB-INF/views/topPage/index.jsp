@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="models.Report"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <c:import url="../layout/app.jsp">
     <c:param name="content">
         <c:if test="${flush != null}">
@@ -32,7 +34,12 @@
 								<td class="report_name blue">承認</td>
 							</c:when>
 							<c:when test="${report.approval.result == '却下'}">
-								<td class="report_name red">却下 &nbsp;&nbsp;<a href="<c:url value='/resubmitreport/new?id=${report.id}' />">再提出</a></td>
+								<td class="report_name red">却下 &nbsp;&nbsp;
+
+								<c:if test="${report.resubmit_flag == 1}">
+									<a href="<c:url value='/resubmitreport/new?id=${report.id}' />">再提出申請</a></td>
+								</c:if>
+
 							</c:when>
 						</c:choose>
                         <td class="report_action"><a href="<c:url value='/reports/show?id=${report.id}' />">詳細を見る</a></td>
