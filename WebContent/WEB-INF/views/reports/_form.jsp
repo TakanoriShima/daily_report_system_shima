@@ -38,7 +38,7 @@
 
 <label for="approval_admin_id">承認者選択</label><br />
 <select name="approval_admin_id">
-<option value="none">承認者を選択してください</option>
+<option value="0">承認者を選択してください</option>
 <c:forEach var="admin" items="${admins}">
 	<option value="${admin.id}" <c:if test="${report.approval_employee.id == admin.id}">selected</c:if>><c:out value="${admin.name}" /></option>
 </c:forEach>

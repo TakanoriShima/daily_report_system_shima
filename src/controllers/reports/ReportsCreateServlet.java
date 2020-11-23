@@ -56,8 +56,10 @@ public class ReportsCreateServlet extends HttpServlet {
 
 			r.setTitle(request.getParameter("title"));
 			r.setContent(request.getParameter("content"));
+
 			System.out.println("start: " + request.getParameter("start_at"));
 			System.out.println("end: " + request.getParameter("end_at"));
+
 			r.setStart_at(request.getParameter("start_at"));
 			r.setEnd_at(request.getParameter("end_at"));
 
