@@ -11,11 +11,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Table(name = "negotiations")
 @NamedQueries({
-//		@NamedQuery(name = "getFavoritesOfAttension", query = "SELECT f FROM Favorite AS f WHERE f.employee=:employee AND f.report=:report")
+		@NamedQuery(name = "getNegotiationsOfAttension", query = "SELECT n FROM Negotiation AS n WHERE n.customer=:customer ORDER BY n.id DESC")
 
 })
 @Entity
@@ -35,12 +36,17 @@ public class Negotiation /* implements Serializable */ {
 	@JoinColumn(name = "customer_id", nullable = false)
 	private Customer customer;
 
+	// Reportモデルと多対１で結びつく
+	@ManyToOne
+	@JoinColumn(name = "report_id")
+	private Report report;
+
 	@Lob
 	@Column(name = "content", nullable = false)
 	private String content;
 
 	@Column(name = "report_date", nullable = false)
-	private Date negotiation_date;
+	private Date report_date;
 
 	public Integer getId() {
 		return id;
@@ -74,13 +80,15 @@ public class Negotiation /* implements Serializable */ {
 		this.content = content;
 	}
 
-	public Date getNegotiation_date() {
-		return negotiation_date;
+	public Date getReport_date() {
+		return report_date;
 	}
 
-	public void setNegotiation_date(Date negotiation_date) {
-		this.negotiation_date = negotiation_date;
+	public void setReport_date(Date report_date) {
+		this.report_date = report_date;
 	}
+
+
 
 
 }

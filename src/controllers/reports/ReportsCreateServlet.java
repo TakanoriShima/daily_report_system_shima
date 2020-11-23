@@ -74,8 +74,8 @@ public class ReportsCreateServlet extends HttpServlet {
 			Timestamp currentTime = new Timestamp(System.currentTimeMillis());
 			r.setCreated_at(currentTime);
 			r.setUpdated_at(currentTime);
+			n.setReport_date(report_date);
 
-			n.setNegotiation_date(report_date);
 			n.setEmployee((Employee) request.getSession().getAttribute("login_employee"));
 			Customer c = em.find(Customer.class, Integer.parseInt(request.getParameter("customer_id")));
 			n.setCustomer(c);

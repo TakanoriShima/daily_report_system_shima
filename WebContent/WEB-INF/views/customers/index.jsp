@@ -31,7 +31,7 @@
                         <td class="report_name"><c:out value="${customer.tel }" /></td>
                         <td class="report_name"><c:out value="${customer.memo}" /></td>
                         <td class="report_name"><c:out value="${customer.register_date}" /></td>
-                        <td class="report_action"><a href="<c:url value='/customers/show?id=${cunstomer.id}' />">詳細を見る</a></td>
+                        <td class="report_action"><a href="<c:url value='/customers/show?id=${customer.id}' />">詳細を見る</a></td>
                     </tr>
                 </c:forEach>
             </tbody>
