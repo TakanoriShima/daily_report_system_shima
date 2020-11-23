@@ -21,6 +21,9 @@
                         <c:if test="${sessionScope.login_employee.admin_flag == 1}">
                         	<a href="<c:url value='/approvals/index' />">日報承認管理</a>&nbsp;
                         </c:if>
+
+                        <a href="<c:url value='/customers/index' />">商談顧客管理</a>&nbsp;
+
                     </c:if>
                 </div>
                 <c:if test="${sessionScope.login_employee != null}">

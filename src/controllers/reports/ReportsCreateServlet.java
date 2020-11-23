@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import models.Customer;
 import models.Employee;
+import models.Negotiation;
 import models.Report;
 import models.validators.ReportValidator;
 import utils.DBUtil;
@@ -44,6 +46,7 @@ public class ReportsCreateServlet extends HttpServlet {
 			EntityManager em = DBUtil.createEntityManager();
 
 			Report r = new Report();
+			Negotiation n =new Negotiation();
 
 			r.setEmployee((Employee) request.getSession().getAttribute("login_employee"));
 
@@ -63,13 +66,20 @@ public class ReportsCreateServlet extends HttpServlet {
 			r.setStart_at(request.getParameter("start_at"));
 			r.setEnd_at(request.getParameter("end_at"));
 
-			Employee approval_employee = em.find(Employee.class, Integer.parseInt(request.getParameter("approval_admin_id")));
+			Employee approval_employee = em.find(Employee.class,
+					Integer.parseInt(request.getParameter("approval_admin_id")));
 
 			r.setApproval_employee(approval_employee);
 
 			Timestamp currentTime = new Timestamp(System.currentTimeMillis());
 			r.setCreated_at(currentTime);
 			r.setUpdated_at(currentTime);
+
+			n.setNegotiation_date(report_date);
+			n.setEmployee((Employee) request.getSession().getAttribute("login_employee"));
+			Customer c = em.find(Customer.class, Integer.parseInt(request.getParameter("customer_id")));
+			n.setCustomer(c);
+			n.setContent(request.getParameter("business_content"));
 
 			List<String> errors = ReportValidator.validate(r);
 			if (errors.size() > 0) {
@@ -84,6 +94,7 @@ public class ReportsCreateServlet extends HttpServlet {
 			} else {
 				em.getTransaction().begin();
 				em.persist(r);
+				em.persist(n);
 				em.getTransaction().commit();
 				em.close();
 				request.getSession().setAttribute("flush", "登録が完了しました。");
